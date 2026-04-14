@@ -1,0 +1,21 @@
+<form id="add-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="">
+    {:token()}
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Terminal')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[terminal]" value="client" data-rule="required" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Min_version')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[min_version]" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Latest_version')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[latest_version]" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Force_version')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[force_version]" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Gray_ratio')}:</label><div class="col-xs-12 col-sm-8"><input type="number" class="form-control" name="row[gray_ratio]" value="0" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Gray_group_tag')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[gray_group_tag]" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更新启用:</label><div class="col-xs-12 col-sm-8"><select class="form-control" id="hot-enabled"><option value="1">是</option><option value="0">否</option></select></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更目标版本:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" id="hot-target-version" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更新包链接:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" id="hot-package-url" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更新SHA256:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" id="hot-sha256" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更新包格式:</label><div class="col-xs-12 col-sm-8"><select class="form-control" id="hot-archive-type"><option value="zip">zip</option><option value="7z">7z</option></select></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更子目录:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" id="hot-extract-subdir" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更强制:</label><div class="col-xs-12 col-sm-8"><select class="form-control" id="hot-force"><option value="1">是</option><option value="0" selected>否</option></select></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更灰度比例:</label><div class="col-xs-12 col-sm-8"><input type="number" class="form-control" id="hot-gray-ratio" value="0" min="0" max="100" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">热更灰度标签:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" id="hot-gray-group-tag" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Switch_json')}:</label><div class="col-xs-12 col-sm-8"><textarea class="form-control" rows="3" name="row[switch_json]"></textarea></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label><div class="col-xs-12 col-sm-8">{:build_radios('row[status]', ['normal'=>__('Normal'),'hidden'=>__('Hidden')])}</div></div>
+    <div class="form-group hidden layer-footer"><label class="control-label col-xs-12 col-sm-2"></label><div class="col-xs-12 col-sm-8"><button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button><button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button></div></div>
+</form>

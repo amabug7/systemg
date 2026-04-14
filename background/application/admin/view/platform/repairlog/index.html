@@ -1,0 +1,17 @@
+<div class="panel panel-default panel-intro">
+    {:build_heading()}
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+                <div class="widget-body no-padding">
+                    <div id="toolbar" class="toolbar">
+                        <a href="javascript:;" class="btn btn-primary btn-refresh" title="{:__('Refresh')}"><i class="fa fa-refresh"></i></a>
+                        <a href="javascript:;" class="btn btn-success btn-exportlogs {:$auth->check('platform/repairlog/export')?'':'hide'}" title="{:__('Export')}"><i class="fa fa-download"></i> {:__('Export')}</a>
+                    </div>
+                    <div id="active-filter-hint" class="alert alert-info" style="margin:10px;display:none;"></div>
+                    <table id="table" class="table table-striped table-bordered table-hover table-nowrap" width="100%"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

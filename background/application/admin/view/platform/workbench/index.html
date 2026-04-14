@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">{:__('Quick workbench')}</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" id="reload-workbench" class="btn btn-primary btn-sm">{:__('Refresh')}</button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-lg-3 col-xs-6"><div class="small-box bg-aqua"><div class="inner"><h3 id="pending-messages">0</h3><p>{:__('Pending messages')}</p></div><div class="icon"><i class="fa fa-commenting"></i></div></div></div>
+                    <div class="col-lg-3 col-xs-6"><div class="small-box bg-red"><div class="inner"><h3 id="open-alerts">0</h3><p>{:__('Open alerts')}</p></div><div class="icon"><i class="fa fa-bell"></i></div></div></div>
+                    <div class="col-lg-3 col-xs-6"><div class="small-box bg-green"><div class="inner"><h3 id="published-today">0</h3><p>{:__('Published today')}</p></div><div class="icon"><i class="fa fa-history"></i></div></div></div>
+                    <div class="col-lg-3 col-xs-6"><div class="small-box bg-yellow"><div class="inner"><h3 id="active-pages">0</h3><p>{:__('Active pages')}</p></div><div class="icon"><i class="fa fa-window-maximize"></i></div></div></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="platform/message" class="btn btn-primary addtabsit">{:__('Go message review')}</a>
+                        <a href="platform/orderalert" class="btn btn-danger addtabsit">{:__('Go alert center')}</a>
+                        <a href="platform/configrelease" class="btn btn-success addtabsit">{:__('Go release history')}</a>
+                        <a href="platform/page" class="btn btn-info addtabsit">{:__('Go page config')}</a>
+                        <a href="platform/material" class="btn btn-warning addtabsit">{:__('Go material library')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

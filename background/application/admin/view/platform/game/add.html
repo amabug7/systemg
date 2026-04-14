@@ -1,0 +1,259 @@
+
+<style>
+.game-form { max-width: 960px; margin: 0 auto; padding: 20px 0; }
+.form-section { background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 20px; overflow: hidden; }
+.section-header { display: flex; align-items: center; gap: 8px; padding: 16px 24px; border-bottom: 1px solid #f0f0f0; font-size: 15px; font-weight: 650; color: #333; }
+.section-header .icon { width: 20px; height: 20px; opacity: .5; }
+.form-body { padding: 20px 24px; }
+.form-row { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; align-items: flex-start; }
+.form-item { flex: 1; min-width: 200px; }
+.form-item label { display: block; font-size: 13px; font-weight: 550; color: #555; margin-bottom: 6px; }
+.form-item label .req { color: #e74c3c; margin-left: 2px; }
+.form-item input[type="text"],
+.form-item input[type="number"],
+.form-item input[type="url"],
+.form-item textarea,
+.form-item select {
+  width: 100%; padding: 8px 12px;
+  border: 1px solid #dcdfe6; border-radius: 6px;
+  font-size: 13.5px; outline: none; transition: border-color .2s;
+}
+.form-item input:focus, .form-item textarea:focus, .form-item select:focus {
+  border-color: #6366f1; box-shadow: 0 0 0 2px rgba(99,102,241,.12);
+}
+.form-item textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+.form-item .help-text { font-size: 11.5px; color: #999; margin-top: 4px; }
+
+/* 动态列表（轮播/资源/修复） */
+.dynamic-list { width: 100%; }
+.dynamic-item {
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 14px; background: #fafbfc; border: 1px solid #eee;
+  border-radius: 8px; margin-bottom: 10px; position: relative;
+  animation: slideIn .25s ease;
+}
+@keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+.dynamic-item .di-field { flex: 1; min-width: 120px; }
+.dynamic-item .di-field label { display: block; font-size: 11px; color:#888; margin-bottom: 3px; }
+.dynamic-item .di-field input { padding: 5px 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 12.5px; }
+.dynamic-item .btn-remove {
+  flex-shrink: 0; width: 28px; height: 28px; border: none; border-radius: 50%;
+  background: #fee; color: #e74c3c; cursor: pointer; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.dynamic-item .btn-remove:hover { background: #fcc; transform: scale(1.05); }
+.btn-add-row {
+  display: inline-flex; align-items: center; gap: 5px; padding: 7px 18px;
+  border: 1px dashed #ccc; border-radius: 7px; background: none;
+  color: #666; font-size: 13px; cursor: pointer; transition: all .2s; margin-top: 4px;
+}
+.btn-add-row:hover { border-color: #6366f1; color: #6366f1; background: rgba(99,102,241,.03); }
+
+/* 定价区 */
+.pricing-grid { display: flex; gap: 20px; }
+.price-box {
+  flex: 1; padding: 16px; border: 1px solid #eee; border-radius: 10px;
+  text-align: center; transition: all .2s;
+}
+.price-box:hover { border-color: #dcdfe6; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.price-box .label { font-size: 12px; color: #888; margin-bottom: 6px; }
+.price-box input { text-align: center; font-size: 22px !important; font-weight: 700; border-color: #dcdfe6 !important; }
+.price-box.member { border-color: #e8d5ff; background: #faf5ff; }
+.price-box.member .label { color: #8b5cf6; }
+.price-box.normal { opacity: .75; }
+.price-box.normal .label { color: #999; }
+
+/* 底部操作栏 */
+.form-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 24px; background: #fafbfc; border-top: 1px solid #eee;
+  border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;
+}
+
+/* 标签输入 */
+.tags-input { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; border: 1px solid #dcdfe6; border-radius: 6px; padding: 6px 10px; min-height: 38px; }
+.tags-input .tag-chip {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px;
+  background: #eef2ff; color: #6366f1; border-radius: 4px; font-size: 12px;
+}
+.tags-input .tag-chip .remove-tag { cursor: pointer; color: #aaa; font-size: 14px; line-height: 1; }
+.tags-input input { border: none !important; outline: none; flex: 1; min-width: 100px; padding: 4px 0 !important; }
+.picker-wrap { display:flex; align-items:center; gap:6px; }
+.picker-wrap input { flex:1; }
+.btn-picker { border:1px solid #dcdfe6; background:#fff; color:#555; border-radius:6px; padding:5px 10px; font-size:12px; cursor:pointer; }
+.btn-picker:hover { border-color:#6366f1; color:#6366f1; }
+.cover-preview-box { margin-top:8px; }
+.cover-preview-box img { width:160px; height:90px; object-fit:cover; border:1px solid #eee; border-radius:6px; background:#fafafa; }
+</style>
+
+<div class="game-form">
+<form id="add-form" class="form-horizontal" role="form" action="" method="post">
+
+  <!-- ===== 基本信息 ===== -->
+  <div class="form-section">
+    <div class="section-header">
+      <span>📋</span> 基本信息
+    </div>
+    <div class="form-body">
+      <div class="form-row">
+        <div class="form-item">
+          <label>游戏名称<span class="req">*</span></label>
+          <input type="text" name="row[title]" value="" placeholder="请输入游戏名称" required />
+        </div>
+        <div class="form-item">
+          <label>副标题</label>
+          <input type="text" name="row[subtitle]" placeholder="简短描述，如'经典怀旧RPG'" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-item">
+          <label>标识符 (slug)<span class="req">*</span></label>
+          <input type="text" name="row[slug]" value="" placeholder="如 my-game-2026" required />
+          <p class="help-text">URL 友好标识，仅支持英文、数字和连字符</p>
+        </div>
+        <div class="form-item">
+          <label>游戏类型</label>
+          <select name="row[genre]">
+            <option value="">请选择类型</option>
+            <option value="RPG">RPG 角色扮演</option>
+            <option value="SLG">SLG 策略模拟</option>
+            <option value="ACT">ACT 动作游戏</option>
+            <option value="FPS">FPS 射击游戏</option>
+            <option value="RTS">RTS 即时战略</option>
+            <option value="AVG">AVG 冒险解谜</option>
+            <option value="SIM">SIM 模拟经营</option>
+            <option value="RAC">RAC 赛车竞速</option>
+            <option value="FTG">FTG 格斗游戏</option>
+            <option value="PUZ">PUZ 益智休闲</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-item">
+          <label>开发者</label>
+          <input type="text" name="row[developer]" placeholder="开发商/发行商" />
+        </div>
+        <div class="form-item">
+          <label>发行日期</label>
+          <input type="text" name="row[release_date]" placeholder="如 2024-06-15 或 2024年6月" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-item">
+          <label>封面图片 URL<span class="req">*</span></label>
+          <input type="url" name="row[cover]" value="" placeholder="https://..." required />
+        </div>
+        <div class="form-item">
+          <label>标签</label>
+          <div class="tags-input" id="tagsInput">
+            <!-- JS动态管理 -->
+            <input type="text" placeholder="输入后回车添加标签" />
+          </div>
+          <input type="hidden" name="row[tags]" id="tagsHidden" value="" />
+        </div>
+      </div>
+      <div class="form-item">
+        <label>简介</label>
+        <textarea name="row[intro]" rows="3" placeholder="一句话介绍这款游戏..."></textarea>
+      </div>
+      <div class="form-item">
+        <label>详细介绍</label>
+        <textarea name="row[full_description]" rows="6" placeholder="支持富文本内容（可包含HTML标记）"></textarea>
+        <p class="help-text">支持 HTML 标签用于详情页展示，留空则使用简介</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 定价设置 ===== -->
+  <div class="form-section">
+    <div class="section-header"><span>💰</span> 定价设置</div>
+    <div class="form-body">
+      <div class="pricing-grid">
+        <div class="price-box member">
+          <div class="label">会员价格 (¥)</div>
+          <input type="number" name="row[member_price]" value="0" step="0.01" min="0" placeholder="0.00" />
+        </div>
+        <div class="price-box normal">
+          <div class="label">普通用户价格 (¥)</div>
+          <input type="number" name="row[base_price]" value="0" step="0.01" min="0" placeholder="0.00" />
+        </div>
+      </div>
+      <div class="form-row" style="margin-top: 14px;">
+        <div class="form-item">
+          <label>会员专属</label>
+          <select name="row[is_member_only]">
+            <option value="0">否 — 所有人可见</option>
+            <option value="1">是 — 仅会员可见</option>
+          </select>
+        </div>
+        <div class="form-item">
+          <label>排序权重</label>
+          <input type="number" name="row[weigh]" value="0" /> &nbsp;&nbsp;
+          <input type="number" name="row[display_order]" value="0" style="width:auto;max-width:90px;" placeholder="展示序号" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 轮播图管理 ===== -->
+  <div class="form-section">
+    <div class="section-header"><span>🖼️</span> 轮播图设置
+      <span style="font-size:12px;font-weight:400;color:#999;margin-left:8px;">（仅保留图片 URL，可直接填写外部地址或从素材库选择）</span>
+    </div>
+    <div class="form-body">
+      <div class="dynamic-list" id="carouselList"></div>
+      <button type="button" class="btn-add-row js-add-carousel" data-action="carousel">+ 添加轮播图</button>
+      <!-- 隐藏字段存储 JSON 兼容旧逻辑 -->
+      <input type="hidden" name="row[carousel_json]" id="carouselJsonHidden" value="[]" />
+    </div>
+  </div>
+
+  <!-- ===== 下载资源管理 ===== -->
+  <div class="form-section">
+    <div class="section-header"><span>📦</span> 下载资源（版本 / MOD / 补丁）
+      <span style="font-size:12px;font-weight:400;color:#999;margin-left:8px;">（从天翼云文件或直链资源中选择，自动显示资源信息）</span>
+    </div>
+    <div class="form-body">
+      <div class="dynamic-list" id="resourceList"></div>
+      <button type="button" class="btn-add-row js-add-resource" data-action="resource">+ 添加资源</button>
+      <input type="hidden" name="row[resource_links_json]" id="resourceJsonHidden" value="[]" />
+    </div>
+  </div>
+
+  <!-- ===== 修复方案 ===== -->
+  <div class="form-section">
+    <div class="section-header"><span>🔧</span> 环境修复方案
+      <span style="font-size:12px;font-weight:400;color:#999;margin-left:8px;">（从天翼云文件或直链资源中选择修复文件）</span>
+    </div>
+    <div class="form-body">
+      <div class="dynamic-list" id="repairList"></div>
+      <button type="button" class="btn-add-row js-add-repair" data-action="repair">+ 添加修复方案</button>
+      <input type="hidden" name="row[repair_profile_json]" id="repairJsonHidden" value="[]" />
+    </div>
+  </div>
+
+  <!-- ===== 发布状态 ===== -->
+  <div class="form-section">
+    <div class="section-header"><span>⚙️</span> 发布设置</div>
+    <div class="form-body">
+      <div class="form-row">
+        <div class="form-item">
+          <label>状态</label>
+          <select name="row[status]">
+            <option value="normal">正常发布</option>
+            <option value="hidden">隐藏</option>
+            <option value="draft">草稿</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="form-footer">
+      <div style="color:#999;font-size:12px;">* 带 <span style="color:#e74c3c;">*</span> 的为必填项</div>
+      <button type="submit" class="btn btn-success btn-embossed">{:__('OK')}</button>
+    </div>
+  </div>
+
+</form>
+</div>
+

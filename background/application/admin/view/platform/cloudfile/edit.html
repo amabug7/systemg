@@ -1,0 +1,78 @@
+<form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="">
+    {:token()}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文件名:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" data-cloudfile-name value="{$row.name|htmlentities}" readonly />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文件备注:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" name="row[remark]" value="{$row.remark|htmlentities}" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文件大小(MB):</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" data-cloudfile-size data-bytes="{$row.file_size|htmlentities}" readonly />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">归属游戏:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_select('row[game_id]', $gameList, $row.game_id, ['class'=>'form-control selectpicker'])}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">分享码:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" name="row[share_code]" value="{$row.share_code|htmlentities}" data-rule="required" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">访问码:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" name="row[access_code]" value="{$row.access_code|htmlentities}" data-rule="required" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">账号选择规则:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[account_rule]', ['ordered'=>'顺序','random'=>'随机'], $row.account_rule)}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">指定账号ID序列:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" name="row[account_ids]" value="{$row.account_ids|htmlentities}" placeholder="例如: 3,5,8；留空按全部账号" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">云盘信息:</label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="button" class="btn btn-primary btn-fetch-cloudfile-info">读取云盘信息</button>
+            <span class="help-block" data-cloudfile-source>当前显示为已保存的文件信息；修改分享码、访问码或账号规则后，可重新读取，保存时也会自动更新。</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">状态:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[status]', ['normal'=>'开启','hidden'=>'隐藏'], $row.status)}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">权重:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="number" class="form-control" name="row[weigh]" value="{$row.weigh|htmlentities}" />
+        </div>
+    </div>
+    <div class="form-group hidden layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
+

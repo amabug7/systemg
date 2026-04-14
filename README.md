@@ -1,1 +1,4 @@
-# systemg
+background为后台管理系统，服务端
+client为桌面客户端应用程序
+install为微型客户端下载安装程序
+webset为客户使用门户站

@@ -1,0 +1,227 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label>{:__('Game filter')}：</label>
+                        <select id="game-filter" class="form-control">
+                            <option value="0">{:__('All games')}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-left:10px;">
+                        <label>{:__('Days range')}：</label>
+                        <select id="days-filter" class="form-control">
+                            <option value="7">7</option>
+                            <option value="14" selected>14</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
+                    <button id="reload-overview" class="btn btn-primary" style="margin-left:10px;">{:__('Refresh')}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3 id="games-total">0</h3>
+                <p>{:__('Games total')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-gamepad"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3 id="pages-total">0</h3>
+                <p>{:__('Pages total')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-window-maximize"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3 id="download-total">0</h3>
+                <p>{:__('Download total')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-download"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3 id="install-total">0</h3>
+                <p>{:__('Install total')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-hdd-o"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3 id="repair-total">0</h3>
+                <p>{:__('Repair total')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-wrench"></i></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="small-box bg-teal">
+            <div class="inner">
+                <h3 id="install-conversion">0%</h3>
+                <p>{:__('Install conversion')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-random"></i></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="small-box bg-olive">
+            <div class="inner">
+                <h3 id="repair-conversion">0%</h3>
+                <p>{:__('Repair conversion')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-exchange"></i></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-xs-12">
+        <div class="small-box bg-orange">
+            <div class="inner">
+                <h3 id="download-failure-rate">0%</h3>
+                <p>{:__('Download failure rate')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-warning"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-12">
+        <div class="small-box bg-maroon">
+            <div class="inner">
+                <h3 id="install-failure-rate">0%</h3>
+                <p>{:__('Install failure rate')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-exclamation-triangle"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-xs-12">
+        <div class="small-box bg-navy">
+            <div class="inner">
+                <h3 id="repair-failure-rate">0%</h3>
+                <p>{:__('Repair failure rate')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-bug"></i></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-xs-12">
+        <div class="small-box bg-teal">
+            <div class="inner">
+                <h3 id="hot-update-total">0</h3>
+                <p>{:__('Hot update total')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-bolt"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-xs-12">
+        <div class="small-box bg-maroon">
+            <div class="inner">
+                <h3 id="hot-update-failure-rate">0%</h3>
+                <p>{:__('Hot update failure rate')}</p>
+            </div>
+            <div class="icon"><i class="fa fa-exclamation"></i></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Top channels')}</em></div>
+            </div>
+            <div class="panel-body">
+                <ul id="top-channel-list" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Top games')}</em></div>
+            </div>
+            <div class="panel-body">
+                <ul id="top-game-list" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Success trend')}</em></div>
+            </div>
+            <div class="panel-body">
+                <div id="trend-chart" style="height:360px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Hourly success trend')}</em></div>
+            </div>
+            <div class="panel-body">
+                <div id="hourly-chart" style="height:360px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Top install errors')}</em></div>
+            </div>
+            <div class="panel-body">
+                <ul id="install-error-list" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Top repair errors')}</em></div>
+            </div>
+            <div class="panel-body">
+                <ul id="repair-error-list" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Hot update failed steps')}</em></div>
+            </div>
+            <div class="panel-body">
+                <ul id="hot-update-failed-step-list" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default panel-intro">
+            <div class="panel-heading">
+                <div class="panel-lead"><em>{:__('Hot update target versions')}</em></div>
+            </div>
+            <div class="panel-body">
+                <ul id="hot-update-version-list" class="list-group"></ul>
+            </div>
+        </div>
+    </div>
+</div>

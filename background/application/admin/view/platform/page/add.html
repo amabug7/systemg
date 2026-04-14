@@ -1,0 +1,323 @@
+<form id="add-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="">
+    {:token()}
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Terminal')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_select('row[terminal]', ['common'=>__('Common'), 'client'=>__('Client'), 'webset'=>__('Webset')], 'common')}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Page_key')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" name="row[page_key]" data-rule="required" />
+            <span class="help-block">客户端正式配置使用 launcher_schema；可复用模板建议使用 launcher_preset_前缀，例如 launcher_preset_official_dark。</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Title')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" name="row[title]" data-rule="required" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Config_json')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea class="form-control" rows="12" name="row[config_json]" data-rule="required"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">运营预设模板:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="row">
+                <div class="col-xs-8 col-sm-8">
+                    <select class="form-control" id="preset-template">
+                        <option value="">不使用预设</option>
+                        <option value="official_dark">官方暗色主题</option>
+                        <option value="festival_notice">活动公告主题</option>
+                        <option value="minimal_fast">极简高效主题</option>
+                    </select>
+                </div>
+                <div class="col-xs-4 col-sm-4">
+                    <button type="button" class="btn btn-primary btn-block" id="apply-preset-template">一键套用</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">注册需验证码:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="register-captcha-required">
+                <option value="0" selected>否</option>
+                <option value="1">是</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">验证码模块:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="register-captcha-channel">
+                <option value="sms" selected>短信验证码</option>
+                <option value="email">邮箱验证码</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">验证码事件名:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="register-captcha-event" value="register" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">侧栏品牌主标题:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="layout-brand-name" value="Systema Play" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">侧栏品牌副标题:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="layout-brand-sub" value="Game Launcher" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">侧栏品牌Logo字母:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="layout-brand-logo" value="S" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">匿名提示开关:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="layout-anon-enabled">
+                <option value="1" selected>开启</option>
+                <option value="0">关闭</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">匿名提示文案:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="layout-anon-text" value="当前处于匿名模式，可浏览商城和公开内容，账户功能请先登录。" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">顶部下载按钮:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="header-show-download">
+                <option value="1" selected>显示</option>
+                <option value="0">隐藏</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">顶部下载按钮文案:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="header-download-text" value="下载管理" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">顶部账户按钮文案(已登录):</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="header-account-authed" value="账户中心" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">顶部账户按钮文案(未登录):</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="header-account-login" value="登录" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">鉴权状态条开关:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="authbar-enabled">
+                <option value="1" selected>显示</option>
+                <option value="0">隐藏</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">鉴权状态条刷新按钮:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="authbar-show-refresh">
+                <option value="1" selected>显示</option>
+                <option value="0">隐藏</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-页面背景:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-page-bg" value="linear-gradient(135deg, #0a1120, #101a30 45%, #0f1f3a)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-侧栏背景:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-sidebar-bg" value="rgba(7, 14, 28, 0.9)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-卡片背景:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-card-bg" value="#16233c" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-卡片边框:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-card-border" value="#2f4369" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-主文字色:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-text-main" value="#eaf0fb" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-次文字色:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-text-sub" value="#89a3cc" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-按钮背景:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-btn-bg" value="#101d34" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">主题-按钮边框:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="theme-btn-border" value="#3a4e75" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框开关:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="desc-enabled">
+                <option value="1" selected>开启</option>
+                <option value="0">关闭</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框内容:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea class="form-control" rows="3" id="desc-text"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框位置:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="desc-position">
+                <option value="top">顶部</option>
+                <option value="before_content" selected>内容前</option>
+                <option value="bottom">底部</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框背景:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="desc-bg" value="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框文字色:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="desc-color" value="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框边框色:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="desc-border" value="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">文本描述框对齐:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="desc-align">
+                <option value="">默认</option>
+                <option value="left">左对齐</option>
+                <option value="center">居中</option>
+                <option value="right">右对齐</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">修复功能开关:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="repair-enabled">
+                <option value="1" selected>开启</option>
+                <option value="0">关闭</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">修复按钮文案:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="repair-button-text" value="一键修复" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">修复程序下载地址:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="repair-package-url" value="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">修复程序本地路径:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="repair-executable-path" value="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">修复启动参数:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="repair-launch-args" value="/quiet /norestart" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">静默安装:</label>
+        <div class="col-xs-12 col-sm-8">
+            <select class="form-control" id="repair-silent">
+                <option value="1" selected>是</option>
+                <option value="0">否</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">修复上报动作Key:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="text" class="form-control" id="repair-action-key" value="dx_repair" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Version')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="number" class="form-control" name="row[version]" value="1" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input type="number" class="form-control" name="row[weigh]" value="0" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[status]', ['normal'=>__('Normal'), 'hidden'=>__('Hidden')])}
+        </div>
+    </div>
+    <div class="form-group hidden layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

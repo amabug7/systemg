@@ -1,0 +1,11 @@
+<form id="edit-form" class="form-horizontal form-ajax" role="form" data-toggle="validator" method="POST" action="">
+    {:token()}
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Release_no')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[release_no]" value="{$row.release_no|htmlentities}" data-rule="required" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Terminal')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[terminal]" value="{$row.terminal|htmlentities}" data-rule="required" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Release_version')}:</label><div class="col-xs-12 col-sm-8"><input type="number" class="form-control" name="row[release_version]" value="{$row.release_version|htmlentities}" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[status]" value="{$row.status|htmlentities}" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Snapshot_json')}:</label><div class="col-xs-12 col-sm-8"><textarea class="form-control" rows="4" name="row[snapshot_json]">{$row.snapshot_json|htmlentities}</textarea></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Operator_id')}:</label><div class="col-xs-12 col-sm-8"><input type="number" class="form-control" name="row[operator_id]" value="{$row.operator_id|htmlentities}" /></div></div>
+    <div class="form-group"><label class="control-label col-xs-12 col-sm-2">{:__('Remark')}:</label><div class="col-xs-12 col-sm-8"><input type="text" class="form-control" name="row[remark]" value="{$row.remark|htmlentities}" /></div></div>
+    <div class="form-group hidden layer-footer"><label class="control-label col-xs-12 col-sm-2"></label><div class="col-xs-12 col-sm-8"><button type="submit" class="btn btn-primary btn-embossed disabled">{:__('OK')}</button><button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button></div></div>
+</form>
