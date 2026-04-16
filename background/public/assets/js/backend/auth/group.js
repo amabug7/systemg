@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function ($, undefined, Backend, Table, Form, undefined) {
+define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'jstree'], function ($, undefined, Backend, Table, Form) {
     //读取选中的条目
     $.jstree.core.prototype.get_all_checked = function (full) {
         var obj = this.get_selected(), i, j;

@@ -33,10 +33,9 @@ class Group extends Backend
     {
         parent::_initialize();
         $this->model = model('AuthGroup');
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true) ?: [-1];
 
-        $this->childrenGroupIds = $this->auth->getChildrenGroupIds(true);
-
-        $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
+        $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds ?: [-1])->select())->toArray();
 
         Tree::instance()->init($groupList);
         $groupList = [];
@@ -169,7 +168,7 @@ class Group extends Backend
                     model("AuthGroup")->saveAll($childparams);
                     Db::commit();
                     $this->success();
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     Db::rollback();
                     $this->error($e->getMessage());
                 }
@@ -192,13 +191,15 @@ class Group extends Backend
         $ids = $ids ? $ids : $this->request->post("ids");
         if ($ids) {
             $ids = explode(',', $ids);
-            $grouplist = $this->auth->getGroups();
+            $grouplist = collection($this->auth->getGroups())->toArray();
             $group_ids = array_map(function ($group) {
                 return $group['id'];
             }, $grouplist);
             // 移除掉当前管理员所在组别
-            $ids = array_diff($ids, $group_ids);
-
+            $ids = array_diff($ids, $group_ids ?: [-1]);
+            if (!$ids) {
+                $this->error(__('You have no permission'));
+            }
             // 循环判断每一个组别是否可删除
             $grouplist = $this->model->where('id', 'in', $ids)->select();
             $groupaccessmodel = model('AuthGroupAccess');
@@ -254,7 +255,7 @@ class Group extends Backend
         if ($id) {
             $currentGroupModel = $model->get($id);
         }
-        if (($pid || $parentGroupModel) && (!$id || $currentGroupModel)) {
+        if ($parentGroupModel && (!$id || $currentGroupModel)) {
             $id = $id ? $id : null;
             $ruleList = collection(model('AuthRule')->order('weigh', 'desc')->order('id', 'asc')->select())->toArray();
             //读取父类角色所有节点列表
@@ -275,7 +276,7 @@ class Group extends Backend
             //当前所有正常规则列表
             $ruleTree->init($parentRuleList);
             //角色组列表
-            $groupTree->init(collection(model('AuthGroup')->where('id', 'in', $this->childrenGroupIds)->select())->toArray());
+            $groupTree->init(collection(model('AuthGroup')->where('id', 'in', $this->childrenGroupIds ?: [-1])->select())->toArray());
 
             //读取当前角色下规则ID集合
             $adminRuleIds = $this->auth->getRuleIds();

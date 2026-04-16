@@ -33,10 +33,10 @@ class Admin extends Backend
         parent::_initialize();
         $this->model = model('Admin');
 
-        $this->childrenAdminIds = $this->auth->getChildrenAdminIds($this->auth->isSuperAdmin());
-        $this->childrenGroupIds = $this->auth->getChildrenGroupIds($this->auth->isSuperAdmin());
+        $this->childrenAdminIds = $this->auth->getChildrenAdminIds($this->auth->isSuperAdmin()) ?: [-1];
+        $this->childrenGroupIds = $this->auth->getChildrenGroupIds($this->auth->isSuperAdmin()) ?: [-1];
 
-        $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds)->select())->toArray();
+        $groupList = collection(AuthGroup::where('id', 'in', $this->childrenGroupIds ?:[-1])->select())->toArray();
 
         Tree::instance()->init($groupList);
         $groupdata = [];
@@ -76,9 +76,9 @@ class Admin extends Backend
                 return $this->selectpage();
             }
             $childrenGroupIds = $this->childrenGroupIds;
-            $groupName = AuthGroup::where('id', 'in', $childrenGroupIds)
+            $groupName = AuthGroup::where('id', 'in', $childrenGroupIds ?: [-1])
                 ->column('id,name');
-            $authGroupList = AuthGroupAccess::where('group_id', 'in', $childrenGroupIds)
+            $authGroupList = AuthGroupAccess::where('group_id', 'in', $childrenGroupIds ?: [-1])
                 ->field('uid,group_id')
                 ->select();
 
@@ -96,7 +96,7 @@ class Admin extends Backend
 
             $list = $this->model
                 ->where($where)
-                ->where('id', 'in', $this->childrenAdminIds)
+                ->where('id', 'in', $this->childrenAdminIds ?: [-1])
                 ->field(['password', 'salt', 'token'], true)
                 ->order($sort, $order)
                 ->paginate($limit);
@@ -245,11 +245,14 @@ class Admin extends Backend
         }
         $ids = $ids ? $ids : $this->request->post("ids");
         if ($ids) {
-            $ids = array_intersect($this->childrenAdminIds, array_filter(explode(',', $ids)));
+            $ids = array_intersect($this->childrenAdminIds ?: [-1], array_filter(explode(',', $ids)));
+            if (!$ids) {
+                $this->error(__('You have no permission'));
+            }
             // 避免越权删除管理员
             $childrenGroupIds = $this->childrenGroupIds;
             $adminList = $this->model->where('id', 'in', $ids)->where('id', 'in', function ($query) use ($childrenGroupIds) {
-                $query->name('auth_group_access')->where('group_id', 'in', $childrenGroupIds)->field('uid');
+                $query->name('auth_group_access')->where('group_id', 'in', $childrenGroupIds ?: [-1])->field('uid');
             })->select();
             if ($adminList) {
                 $deleteIds = [];

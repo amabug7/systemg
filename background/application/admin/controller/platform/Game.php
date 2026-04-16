@@ -109,7 +109,7 @@ class Game extends Backend
             ->page($page, $listRows)
             ->select();
 
-        $this->success('', [
+        $this->success('', null, [
             'total' => $total,
             'page' => $page,
             'list_rows' => $listRows,
@@ -203,7 +203,7 @@ class Game extends Backend
             ->page($page, $listRows)
             ->select();
 
-        $this->success('', [
+        $this->success('', null, [
             'total' => $total,
             'page' => $page,
             'list_rows' => $listRows,
@@ -239,7 +239,7 @@ class Game extends Backend
             ->page($page, $listRows)
             ->select();
 
-        $this->success('', [
+        $this->success('', null, [
             'total' => $total,
             'page' => $page,
             'list_rows' => $listRows,

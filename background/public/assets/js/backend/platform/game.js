@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefined, Backend, Table, Form) {
+define(['jquery', 'bootstrap', 'backend', 'table', 'form', 'fast'], function ($, undefined, Backend, Table, Form, fast) {
     var getLayer = function () {
         return window.layer || (window.parent && window.parent.layer) || null;
     };
@@ -60,7 +60,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             return;
         }
         var params = $.extend({page: page, list_rows: 12, keyword: keyword || ''}, extraParams || {});
-        $.getJSON(cfg.url, params, function (res) {
+        $.getJSON(Fast.api.fixurl(cfg.url), params, function (res) {
             if (!res || Number(res.code) !== 1 || !res.data) {
                 cb([], 0);
                 return;
@@ -177,11 +177,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                 };
 
                 $layer.off('click', '#picker-search').on('click', '#picker-search', function () {
-                    state.keyword = $.trim($layer.find('#picker-keyword').val() || '');
-                    state.page = 1;
-                    load();
-                });
-                $layer.off('change', '#picker-source').on('change', '#picker-source', function () {
+                     state.keyword = $.trim($layer.find('#picker-keyword').val() || '');
+                state.page = 1;
+                load();
+            });
+            $layer.off('keydown', '#picker-keyword').on('keydown', '#picker-keyword', function (e) {
+                if (e.keyCode === 13 || e.key === 'Enter') {
+                    e.preventDefault();
+                    $layer.find('#picker-search').trigger('click');
+                }
+            });
+            $layer.off('change', '#picker-source').on('change', '#picker-source', function () {
                     state.source = $(this).val();
                     state.page = 1;
                     load();
@@ -284,7 +290,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             + '  </div>'
             + '  <div class="di-actions">'
             + '    <button type="button" class="btn-row-pick btn-pick-resource">选择天翼云/直链文件</button>'
-            + '    <button type="button" class="btn-row-pick btn-preview-resource">预览</button>'
             + '    <button type="button" class="btn-remove">×</button>'
             + '  </div>'
             + '</div>';
@@ -310,7 +315,6 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             + '  </div>'
             + '  <div class="di-actions">'
             + '    <button type="button" class="btn-row-pick btn-pick-repair">选择天翼云/直链文件</button>'
-            + '    <button type="button" class="btn-row-pick btn-preview-repair">预览</button>'
             + '    <button type="button" class="btn-remove">×</button>'
             + '  </div>'
             + '</div>';

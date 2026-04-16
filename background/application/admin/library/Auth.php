@@ -5,6 +5,7 @@ namespace app\admin\library;
 use app\admin\model\Admin;
 use fast\Random;
 use fast\Tree;
+use think\Collection;
 use think\Config;
 use think\Cookie;
 use think\Hook;
@@ -95,7 +96,11 @@ class Auth extends \fast\Auth
         if (!$keeplogin) {
             return false;
         }
-        list($id, $keeptime, $expiretime, $key) = explode('|', $keeplogin);
+        $parts = explode('|', $keeplogin);
+        if (count($parts) < 4) {
+            return false;
+        }
+        list($id, $keeptime, $expiretime, $key) = $parts;
         if ($id && $keeptime && $expiretime && $key && $expiretime > time()) {
             $admin = Admin::get($id);
             if (!$admin || !$admin->token) {
@@ -326,7 +331,7 @@ class Auth extends \fast\Auth
     public function getChildrenGroupIds($withself = false)
     {
         //取出当前管理员所有的分组
-        $groups = $this->getGroups();
+        $groups = collection($this->getGroups())->toArray();
         $groupIds = array_column($groups, 'id');
         $originGroupIds = $groupIds;
         foreach ($groups as $k => $v) {
@@ -336,7 +341,7 @@ class Auth extends \fast\Auth
             }
         }
         // 取出所有分组
-        $groupList = \app\admin\model\AuthGroup::where($this->isSuperAdmin() ? '1=1' : ['status' => 'normal'])->select();
+        $groupList = Collection(\app\admin\model\AuthGroup::where($this->isSuperAdmin() ? '1=1' : ['status' => 'normal'])->select());
         $objList = [];
         foreach ($groups as $k => $v) {
             if ($v['rules'] === '*') {
@@ -368,7 +373,7 @@ class Auth extends \fast\Auth
         $childrenAdminIds = [];
         if (!$this->isSuperAdmin()) {
             $groupIds = $this->getChildrenGroupIds(false);
-            $childrenAdminIds = \app\admin\model\AuthGroupAccess::where('group_id', 'in', $groupIds)
+            $childrenAdminIds = \app\admin\model\AuthGroupAccess::where('group_id', 'in', $groupIds ?: [-1])
                 ->column('uid');
         } else {
             //超级管理员拥有所有人的权限
